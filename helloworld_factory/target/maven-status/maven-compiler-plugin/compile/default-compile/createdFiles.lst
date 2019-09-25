@@ -1,0 +1,8 @@
+examples/StandardOutMessageRenderer.class
+examples/MesaagesByeRandom.class
+examples/HelloWorldMessageProvider.class
+examples/MessageRenderer.class
+examples/MainApplication.class
+examples/MessageSupportFactory.class
+examples/MessageProvider.class
+examples/Bybye.class
