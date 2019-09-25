@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans	
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+		
+    <bean id="renderer" 
+          class="examples.StandardOutMessageRenderer">
+        <property name="messageProvider" 
+                  ref="provider"/>
+        
+    </bean>
+    
+     <bean id="rendererAdios" 
+          class="examples.StandardOutMessageRenderer">
+        
+        <property name="messageProvider" 
+                  ref="messageProviderAdios"/>
+        
+    </bean>
+    
+    <bean id="messageProviderAdios" scope="singleton"
+          class="examples.HelloWorldMessageProvider">          
+          <property name="message" value="Adios"></property>
+          <property name="usuario" ref="Usuario"></property>                             
+     </bean>
+    
+    <bean id="provider" scope="singleton"
+          class="examples.HelloWorldMessageProvider">          
+          <property name="message" value="HoladesdeBEan"></property>
+          <property name="usuario" ref="Usuario"></property>                             
+     </bean>
+          
+     <bean id="Usuario" class="examples.Persona">
+     	<property name="name" value="Juan"></property>
+     	<property name="lastName" value="Perez"></property>
+     	
+     </bean>
+          
+</beans>
