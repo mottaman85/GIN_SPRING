@@ -1,0 +1,5 @@
+examples/StandardOutMessageRenderer.class
+examples/HelloWorldMessageProvider.class
+examples/MessageRenderer.class
+examples/MainApplication.class
+examples/MessageProvider.class

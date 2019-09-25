@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: paulinomotahernandez
+Build-Jdk: 13
+Implementation-Title: ComponentScan
+Implementation-Version: 0.1.0
+Implementation-Vendor-Id: examples
+Implementation-Vendor: Pivotal Software, Inc.
+Created-By: Maven Integration for Eclipse
+
