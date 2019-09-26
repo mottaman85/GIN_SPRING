@@ -10,6 +10,8 @@
     
     <!-- enable the usage of annotations -->
     <!--  <context:annotation-config /> -->
+    
+    
 		
     <!-- scan component, it also assumes annotation-config as well-->
     <context:component-scan base-package="examples"/>

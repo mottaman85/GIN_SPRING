@@ -11,6 +11,7 @@ public class MainApplication {
         BeanFactory factory = getBeanFactory();
         MessageRenderer mr = (MessageRenderer) factory.getBean("renderer");
         mr.render();
+        
     }
 
     private static BeanFactory getBeanFactory() throws Exception {

@@ -1,0 +1,2084 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <script src="index_files/tigris.txt" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css"
+      href="index_files/netbeans.css">
+    <title>LAB-4945: Spring 4 MVC Controllers Part II</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="SourceCastVersion" content="2.6.2.4.10">
+    <meta name="keywords" content="NetBeans, IDE, Platform, free, open
+      source, developer">
+    <link rel="stylesheet" href="index_files/netbeans_002.css">
+    <meta name="author" content="Sang Shin">
+    <style type="text/css">
+#search {height:100%;}
+#topmodule {align:right;}
+  </style>
+    <script language="JavaScript" type="text/javascript">
+<!--
+function get_sc_login() {
+  var sclogin = "guest";
+  return (sclogin);
+}
+var username=get_sc_login();
+//-->
+  </script>
+  </head>
+  <body onload="loginfocus()" class="composite" style="background-image:
+    url(index_files/beige.png);">
+    <!-- begin TopTabs --><!-- end TopTabs --><!-- start NavCol --><!-- end NavCol --><!-- Servlet-Specific template --><!-- Show servlet name if it is a servlet --><br>
+    <div style="text-align: center;">@Copyright notice: This content is
+      meant to be used only for paying subscriber's personal
+      consumption. Sharing with others in any shape or form is strictly
+      prohibited&nbsp; unless a special licensing arrangement has been
+      made with <a href="mailto:support@jpassion.com">JPassion.com</a>.<br>
+    </div>
+    <br>
+    <br>
+    <h1 style="text-align: center;">Spring 4 MVC Controllers Part II<br>
+    </h1>
+    <div class="articledate" style="margin-left: 0px; text-align:
+      center;"><a href="http://www.jpassion.com/">jpassion.com</a>, <a
+        href="http://groups.google.com/group/jpassion_spring">class
+        forum</a><a href="mailto:sang.shin@sun.com"><i> </i></a></div>
+    <br>
+    <div style="text-align: center;"><img alt=""
+        src="index_files/sangshin2009.jpg" style="width: 77px; height:
+        89px;"><br>
+    </div>
+    <br>
+    <blockquote> Spring MVC is considered one of the most powerful and
+      yet flexible Model-View-Controller (MVC) based Web application
+      framework.&nbsp;&nbsp; It handles the mapping of requests to
+      controllers and of controllers to views. It has excellent
+      form-handling and form-validation capabilities, and integrates
+      with all popular view technologies, including JSP, Velocity,
+      FreeMarker, XSLT, JasperReports, Excel, and PDFs. <br>
+      <br>
+      In this lab, you are going to explore basic features of Spring MVC
+      especially on annotation-based controllers.&nbsp; Other Spring MVC
+      topics such as "form handling", "REST support",&nbsp; "View
+      technologies", etc. are covered in other presentations/hands-on
+      labs.&nbsp; <br>
+    </blockquote>
+    <br>
+    <br>
+    <div style="text-align: center;"><b>Expected duration: About 80
+        minutes (excluding homework)<br>
+        <br>
+      </b></div>
+    <br>
+    <br>
+    <h3 class="tutorial">Resources</h3>
+    <br>
+    <ul>
+      <li>Documentations</li>
+      <ul>
+        <li><a
+href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html">Chapter
+17:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Web MVC framework</a> from Spring 4 reference document</li>
+        <li><a
+href="http://docs.spring.io/spring-framework/docs/4.0.x/spring-framework-reference/htmlsingle/#new-in-4.0">New
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Features and Enhancements in Spring Framework 4.0</a> from
+          Spring 4 reference document</li>
+        <li><a href="https://dzone.com/refcardz/spring-annotations">Spring
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            annotation reference guide</a><br>
+        </li>
+      </ul>
+      <li>Tutorials<br>
+      </li>
+      <ul>
+        <li><a
+            href="http://kielczewski.eu/2014/04/spring-boot-mvc-application/">Spring
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Boot MVC application</a> tutorial (2014)</li>
+      </ul>
+    </ul>
+    <br>
+    <h3 class="tutorial"><a name="Change_Log"></a>Change Log</h3>
+    <br>
+    <li style="margin-left: 40px;">Sep. 26th, 2016: Separated out as an
+      independent lab (Sang Shin)<br>
+    </li>
+    <br>
+    <h3 class="tutorial">Things to be done (by authoring team)<br>
+    </h3>
+    <ul>
+      <li>None at the moment<br>
+      </li>
+    </ul>
+    <br>
+    <h3 class="tutorial"><a name="Tutorial_Exercises"></a>Lab Exercises</h3>
+    <br>
+    <div style="margin-left: 40px;">Some exercises in this lab are
+      provided in the form of "ready-to-import-and-run" Maven projects
+      in order to maximize the effectiveness of the learning process.
+      You are welcome to create them from scratch.&nbsp;&nbsp; It is
+      also strongly encouraged you do as much experimentation of your
+      own by changing the provided code.<br>
+    </div>
+    <br>
+    <li style="margin-left: 40px;"><a href="index.html#Exercise_1">Exercise
+
+
+        1: URI Template (20 minutes)</a></li>
+    <li style="margin-left: 40px;"><a href="index.html#Exercise_2">Exercise
+
+
+        2: Handler method arguments (20 minutes)</a></li>
+    <li style="margin-left: 40px;"><a href="#Exercise_3">Exercise 3:
+        Interceptor (20 minutes)</a></li>
+    <li style="margin-left: 40px;"><a href="#Exercise_4">Exercise 4:
+        Automatic attribute key name generation (20 minutes)</a><br>
+    </li>
+    <li style="margin-left: 40px;"><a href="#Homework_Exercise">Homework
+        Exercise</a></li>
+    <br>
+    <div style="margin-left: 40px;"> <br>
+    </div>
+    <div style="margin-left: 40px;"> </div>
+    <h2><a name="Exercise_1"></a>Exercise 1: URI templates<br>
+    </h2>
+    <p style="margin-left: 40px;">Learning points<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ul>
+        <li>A URI Template is a URI-like string, containing one or more
+          variables</li>
+        <li>Value of a variable can be captured through @PathVariable
+          annotation<br>
+        </li>
+      </ul>
+    </div>
+    <p style="margin-left: 40px;">Tasks to be performed:<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ol>
+        <li>Run "mvc_basics_URITemplate" project<br>
+        </li>
+        <li>Study the project</li>
+        <li>For your own exercise<br>
+        </li>
+      </ol>
+      <br>
+    </div>
+    <div style="margin-left: 80px;"> </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="1.1"></a>(1.1)
+Run
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      "mvc_basics_URITemplate" sample project</h3>
+    <br>
+    <div style="margin-left: 40px;"><img alt=""
+        src="index_files/mvc_basics-70.png" style="width: 728px; height:
+        544px;"><br>
+      <br>
+      <img alt="" src="index_files/mvc_basics-71.png" style="width:
+        728px; height: 544px;"><br>
+    </div>
+    <br>
+    <div style="margin-left: 40px;">&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="#Exercise_1">return to top of exercise</a>, <a
+        href="#Tutorial_Exercises">return to top</a><br>
+      <br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="1.2"></a>(1.2)
+Study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      "mvc_basics_URITemplate" project</h3>
+    <br>
+    <div style="margin-left: 40px;">1. MyController.java.&nbsp; Observe
+      that the type conversion gets done by the Spring framework.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">package
+              com.jpassion.mvc.controllers;<br>
+              &nbsp;<br>
+              import org.springframework.stereotype.Controller;<br>
+              import org.springframework.ui.Model;<br>
+              import
+              org.springframework.web.bind.annotation.PathVariable;<br>
+              import
+              org.springframework.web.bind.annotation.RequestMapping;<br>
+              import
+              org.springframework.web.bind.annotation.RequestMethod;<br>
+              <br>
+              @Controller<br>
+              @RequestMapping("/helloworld")<br>
+              public class MyController{<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; // Handle URI template, receive it as a
+              String type<br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value="/helloString/<span
+                style="font-weight: bold; color: rgb(255, 0, 0);">{helloId}</span>",
+method
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              = RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public String helloURITemplate(<span
+                style="font-weight: bold; color: rgb(255, 0, 0);">@PathVariable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <span style="color: rgb(51, 51, 255);">String</span>
+                helloId</span>, Model model){<br>
+              &nbsp;<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              model.addAttribute("message"+<span style="font-weight:
+                bold;">helloId</span>, "message"+helloId + " is
+              selected!");<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+              "mypage"+helloId;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; // Handle URI template, receive it as a
+              int type<br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value="/helloint/<span
+                style="font-weight: bold; color: rgb(255, 0, 0);">{helloId}</span>",
+method
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              = RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public String helloURITemplate2(<span
+                style="font-weight: bold; color: rgb(255, 0, 0);">@PathVariable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <span style="color: rgb(51, 51, 255);">int </span>helloId</span>,
+              Model model){<br>
+              &nbsp;<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              model.addAttribute("message"+<span style="font-weight:
+                bold;">helloId</span>, "message"+helloId + " is
+              selected!");<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+              "mypage"+helloId;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </div>
+    <div style="margin-left: 40px;">&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="#Exercise_1">return to top of exercise</a>, <a
+        href="#Tutorial_Exercises">return to top</a><br>
+      <br>
+      <br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="1.3"></a>(1.3)
+For
+
+
+
+
+      your own exercise<br>
+    </h3>
+    <br>
+    <div style="margin-left: 40px;">1. Modify the code so that a URI of
+      the /helloString/{helloId}/{greeting} displays greeting message as
+      following<br>
+      <br>
+      <img alt="" src="index_files/mvc_basics-72.png" style="width:
+        741px; height: 544px;"><br>
+      <br>
+      <img alt="" src="index_files/mvc_basics-73.png" style="width:
+        741px; height: 544px;"><br>
+      <br>
+    </div>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="#Exercise_1">return to top of exercise</a>, <a
+      href="#Tutorial_Exercises">return to top</a><br>
+    <br>
+    <br>
+    <br>
+    <h2><a name="Exercise_2"></a>Exercise 2: Handler method arguments<br>
+    </h2>
+    <p style="margin-left: 40px;">Learning points<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ul>
+        <li>Handler methods can receive various types of arguments
+          including pre-built objects<br>
+        </li>
+      </ul>
+    </div>
+    <p style="margin-left: 40px;">Tasks to be performed:<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ol>
+        <li><a href="#2.1">Run "mvc_basics_HandlerArguments" project</a><br>
+        </li>
+        <li><a href="#2.2">Study the project</a></li>
+        <li><a href="#2.3">For your own exercise</a><br>
+        </li>
+      </ol>
+      <br>
+    </div>
+    <div style="margin-left: 80px;"> </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="2.1"></a>(2.1)
+Run
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      "mvc_basics_HandlerArguments" sample project</h3>
+    <br>
+    <div style="margin-left: 40px;">1. Click the link that has <b>myCity=Boston</b><br>
+      <br>
+    </div>
+    <div style="margin-left: 40px;"><img alt=""
+        src="index_files/mvc_basics-74.png" style="width: 741px; height:
+        544px;"><br>
+      <br>
+      <img alt="" src="index_files/mvc_basics-75.png" style="width:
+        741px; height: 544px;"><br>
+      <br>
+      2. Try the link that has <b>myCity=Seoul</b><br>
+      <br>
+      <img alt="" src="index_files/mvc_basics-76.png" style="width:
+        741px; height: 544px;"><br>
+      <br>
+      3. Try other links<br>
+      <br>
+    </div>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="#Exercise_2">return to top of exercise</a>, <a
+      href="#Tutorial_Exercises">return to top</a><br>
+    <br>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="2.2"></a>(2.2)
+Study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      "mvc_basics_HandlerArguments" project</h3>
+    <br>
+    <div style="margin-left: 40px;">1. MyController.java<br>
+      <br>
+      <table width="100%" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td valign="top">package com.jpassion.mvc.controllers;<br>
+              <br>
+              import java.util.Locale;<br>
+              <br>
+              import javax.servlet.http.HttpServletRequest;<br>
+              <br>
+              import org.springframework.stereotype.Controller;<br>
+              import org.springframework.ui.Model;<br>
+              import
+              org.springframework.web.bind.annotation.PathVariable;<br>
+              import
+              org.springframework.web.bind.annotation.RequestHeader;<br>
+              import
+              org.springframework.web.bind.annotation.RequestMapping;<br>
+              import
+              org.springframework.web.bind.annotation.RequestMethod;<br>
+              import
+              org.springframework.web.bind.annotation.RequestParam;<br>
+              import
+              org.springframework.web.bind.annotation.ResponseBody;<br>
+              <br>
+              @Controller<br>
+              @RequestMapping("/helloworld")<br>
+              public class MyController {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value = "/hello/<b>{helloId}</b>",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              method = RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public String helloURI(<b>@PathVariable
+                int helloId</b>, Model model) {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              model.addAttribute("message" + helloId, "message" +<b>
+                helloId</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; + " is selected!"</b>);<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return "mypage" +
+              helloId;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; // Receive request parameters<br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value =
+              "/hello/{helloId}", method = RequestMethod.GET, <b>params
+                = "myCity=Boston"</b>)<br>
+              &nbsp;&nbsp;&nbsp; public String
+              helloURIparams(@PathVariable int helloId,<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<b>
+                @RequestParam("myCity") String city</b>, Model model) {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              model.addAttribute("message" + helloId, <b>"I live in " +
+                city</b>);<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return "mypage" +
+              helloId;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; // Receive Locale and
+              HttpServletRequest<br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value = "/mylocale",
+              method = RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public String helloObjects(Model model,
+              <b>Locale locale</b>,<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              HttpServletRequest httpServletRequest) {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              model.addAttribute("country", <b>locale.getCountry()</b>);<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              model.addAttribute("ContextPath",
+              httpServletRequest.getContextPath());<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return "mylocale";<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; // Display a request header with
+              explicit name<br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value =
+              "requestHeader1")<br>
+              &nbsp;&nbsp;&nbsp; public <b>@ResponseBody</b><br>
+              &nbsp;&nbsp;&nbsp; String withHeader1(<b>@RequestHeader("Accept")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                String Accept</b>) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return "Obtained
+              'Accept' header '" + Accept + "'";<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; // Display a request header with
+              implicit name<br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value =
+              "requestHeader2")<br>
+              &nbsp;&nbsp;&nbsp; public <b>@ResponseBody</b><br>
+              &nbsp;&nbsp;&nbsp; String withHeader2(<b>@RequestHeader
+                String Accept</b>) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return "Obtained
+              'Accept' header '" + Accept + "'";<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </div>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="#Exercise_2">return to top of exercise</a>, <a
+      href="#Tutorial_Exercises">return to top</a><br>
+    <br>
+    <div style="margin-left: 40px;"><br>
+    </div>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="2.3"></a>(2.3)
+
+
+
+
+      For your own exercise<br>
+    </h3>
+    <br>
+    <div style="margin-left: 40px;">1. Add another method that handles <b>../helloworld/hello/1?myCountry=USA&amp;myCity=Boston</b>
+      and display the following result<br>
+      <br>
+      <table width="100%" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td valign="top">I live in Boston, USA.<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </div>
+    <div style="margin-left: 40px;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="#Exercise_2">return to top of exercise</a>, <a
+        href="#Tutorial_Exercises">return to top</a><a
+        href="#Tutorial_Exercises"></a> </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2><a name="Exercise_3"></a>Exercise 3: Interceptor<br>
+    </h2>
+    <p style="margin-left: 40px;">Learning points<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ul>
+        <li>How to create and configure interceptors</li>
+        <li>How to get and set request scope attributes inside an
+          interceptor<br>
+        </li>
+      </ul>
+    </div>
+    <p style="margin-left: 40px;">Tasks to be performed:<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ol>
+        <li><a href="#3.1">Run the project</a><br>
+        </li>
+        <li><a href="#3.2">Study the project</a></li>
+        <li><a href="#3.3">For your own exercise</a><br>
+        </li>
+      </ol>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="3.1"></a>(3.1)
+Run
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      the "mvc_basics_interceptor" project</h3>
+    <br>
+    <div style="margin-left: 40px;"> 1. Observe that the elapsed time
+      has been computed by the first interceptor.<br>
+      <br>
+    </div>
+    <div style="margin-left: 40px;"><img alt=""
+        src="index_files/1_s11.png" style="width: 775px; height: 695px;"><br>
+      <br>
+      2. Observe that the logging messages are displayed by the 2nd
+      interceptor<br>
+      <br>
+      <img alt="" src="index_files/1_s12.png" style="width: 839px;
+        height: 777px;"><br>
+      <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="#Exercise_3">return to top of exercise</a>, <a
+        href="index.html#Tutorial_Exercises">return to top</a> <a
+        href="index.html#Tutorial_Exercises"></a> </div>
+    <br>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="3.2"></a>(3.2)
+Study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      the project</h3>
+    <br>
+    <div style="margin-left: 40px;">1. <span style="font-weight: bold;">ElapsedTimeInterceptor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </span>interceptor.&nbsp; This is the first of the two
+      interceptors.<br>
+      <br>
+    </div>
+    <div style="margin-left: 40px;">
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">package
+              com.jpassion.mvc.interceptors;<br>
+              <br>
+              import org.slf4j.Logger;<br>
+              import org.slf4j.LoggerFactory;<br>
+              import javax.servlet.http.HttpServletRequest;<br>
+              import javax.servlet.http.HttpServletResponse;<br>
+              <br>
+              import org.springframework.web.servlet.ModelAndView;<br>
+              import
+org.springframework.web.servlet.handler.HandlerInterceptorAdapter;<br>
+              <br>
+              public class <span style="font-weight: bold;">ElapsedTimeInterceptor
+extends
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                HandlerInterceptorAdapter </span>{<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; private static final Logger logger =
+              LoggerFactory.getLogger(ElapsedTimeInterceptor.class);<br>
+              <br>
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; public
+                boolean preHandle(HttpServletRequest request,</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+HttpServletResponse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              response, Object handler) throws Exception {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              logger.info("ElapsedTimeInterceptor: preHandle()
+              entered");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+                style="font-weight: bold;">long startTime =
+                System.currentTimeMillis();</span><br
+                style="font-weight: bold;">
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+request.setAttribute("startTime",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                startTime);</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return true;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              <span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; public
+                void postHandle(HttpServletRequest request,</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+HttpServletResponse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              response, Object handler,<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp; //Model model) throws Exception {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp; ModelAndView modelAndView) throws Exception {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; l<span
+                style="font-weight: bold;">ong startTime = (Long)
+                request.getAttribute("startTime");</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              request.removeAttribute("startTime");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; long endTime =
+              System.currentTimeMillis();<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              //model.addAttribute("handlingTime", endTime - startTime);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+                style="font-weight: bold;">modelAndView.addObject("handlingTime",
+endTime
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                - startTime);</span><br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              logger.info("ElapsedTimeInterceptor: postHandle()
+              exiting");<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      2. <b>LoggingInterceptor </b>interceptor. This is the second of
+      the two interceptors.<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">package
+              com.jpassion.mvc.interceptors;<br>
+              <br>
+              import org.slf4j.Logger;<br>
+              import org.slf4j.LoggerFactory;<br>
+              import javax.servlet.http.HttpServletRequest;<br>
+              import javax.servlet.http.HttpServletResponse;<br>
+              <br>
+              import org.springframework.web.servlet.ModelAndView;<br>
+              import
+org.springframework.web.servlet.handler.HandlerInterceptorAdapter;<br>
+              <br>
+              public class LoggingInterceptor extends <span
+                style="font-weight: bold;">HandlerInterceptorAdapter </span>{<br>
+              &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; private static final Logger logger =
+              LoggerFactory.getLogger(LoggingInterceptor.class);<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; public boolean <span
+                style="font-weight: bold;">preHandle(HttpServletRequest
+                request,</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+HttpServletResponse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              response, Object handler) throws Exception {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              logger.info("*****LoggingInterceptor: preHandle()
+              entered");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return true;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; public void <span style="font-weight:
+                bold;">postHandle(HttpServletRequest request,</span><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+HttpServletResponse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              response, Object handler,<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp; //Model model) throws Exception {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp; ModelAndView modelAndView) throws Exception {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              logger.info("*****LoggingInterceptor: postHandle()
+              exiting");<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      3. Java configuration<br>
+      <br>
+      <table width="100%" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td valign="top">package com.jpassion.mvc;<br>
+              <br>
+              import org.springframework.boot.SpringApplication;<br>
+              import
+              org.springframework.boot.autoconfigure.EnableAutoConfiguration;<br>
+              import org.springframework.context.annotation.Bean;<br>
+              import
+              org.springframework.context.annotation.ComponentScan;<br>
+              import
+              org.springframework.context.annotation.Configuration;<br>
+              import
+              org.springframework.web.servlet.config.annotation.InterceptorRegistry;<br>
+              import
+org.springframework.web.servlet.config.annotation.ViewControllerRegistry;<br>
+              import
+org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;<br>
+              <br>
+              import
+              com.jpassion.mvc.interceptors.ElapsedTimeInterceptor;<br>
+              import com.jpassion.mvc.interceptors.LoggingInterceptor;<br>
+              <br>
+              @Configuration<br>
+              @ComponentScan("com.jpassion")<br>
+              @EnableAutoConfiguration<br>
+              public class MainApplication{<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; public static void main(String[] args)
+              {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              SpringApplication.run(MainApplication.class, args);<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; @Bean<br>
+              &nbsp;&nbsp;&nbsp; WebMvcConfigurerAdapter
+              mvcViewConfigurer() {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return new
+              WebMvcConfigurerAdapter() {<br>
+              <b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; // Configure interceptors</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; @Override</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; public void
+                addInterceptors(InterceptorRegistry registry) {</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                registry.addInterceptor(new LoggingInterceptor());</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                registry.addInterceptor(new ElapsedTimeInterceptor());</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // You can also
+                add path patterns through which interceptors get applied</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                registry.addInterceptor(new
+                ElapsedTimeInterceptor()).addPathPatterns(<br>
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                "/helloworld/*");</b><b><br>
+              </b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; }</b><br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              @Override<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              public void addViewControllers(ViewControllerRegistry
+              registry) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp; registry.addRedirectViewController("/",
+              "/helloworld");<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              }<br>
+              <br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      4. Controller class<br>
+      <br>
+      <table width="100%" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td valign="top">package com.jpassion.mvc.controllers;<br>
+              <br>
+              import java.util.Map;<br>
+              <br>
+              import org.springframework.stereotype.Controller;<br>
+              import org.springframework.ui.ModelMap;<br>
+              import
+              org.springframework.web.bind.annotation.RequestMapping;<br>
+              import
+              org.springframework.web.bind.annotation.RequestMethod;<br>
+              import org.springframework.web.servlet.ModelAndView;<br>
+              <br>
+              @Controller<br>
+              @RequestMapping("/helloworld")<br>
+              public class MyController {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(method =
+              RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public String helloWorld(ModelMap
+              modelMap) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              modelMap.addAttribute("message1", "JavaPassion.com!");<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return "mypage1";<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value = "/sayspring",
+              method = RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public String helloWorld(Map&lt;String,
+              String&gt; map) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; map.put("message2",
+              "Spring!");<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return "mypage2";<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value =
+              "/sayspringmvc", method = RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public ModelAndView helloWorld() {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ModelAndView
+              modelAndView = new ModelAndView("mypage3");<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+              modelAndView.addObject("message3", "Spring MVC!");<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return modelAndView;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="#Exercise_3">return to top of exercise</a>, <a
+        href="index.html#Tutorial_Exercises">return to top</a> <br>
+      <br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="3.3"></a>(3.3)
+
+
+
+      For your own exercise<br>
+    </h3>
+    <blockquote> 1. Add another interceptor as following<br>
+      <ul>
+        <li>Detect the context of the incoming request using <a
+href="http://download.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getContextPath%28%29">getContextPath()</a>
+          method of the <a
+href="http://download.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a>
+          class (in preHandle() method) <br>
+        </li>
+        <li>Display them in the resulting page.</li>
+      </ul>
+    </blockquote>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <a href="#Exercise_3">return
+      to top of exercise</a>, <a href="index.html#Tutorial_Exercises">return
+
+
+
+      to top</a><br>
+    <br>
+    <h2><a name="Exercise_4"></a>Exercise 4: Automatic attribute key
+      name generation<br>
+    </h2>
+    <p style="margin-left: 40px;">Learning points:<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ul>
+        <li>Model attribute key names can be automatically generated
+          when they are not explicitly specified.<br>
+        </li>
+      </ul>
+    </div>
+    <p style="margin-left: 40px;">Tasks to be performed:<br>
+    </p>
+    <div style="margin-left: 40px;">
+      <ol>
+        <li><a href="#4.1">Run the project</a><br>
+        </li>
+        <li><a href="#4.2">Study the project</a></li>
+        <li><a href="#4.3">For your own exercise</a><br>
+        </li>
+      </ol>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="4.1"></a>(4.1)
+Run
+
+
+
+
+
+
+
+
+
+
+
+      "mvc_basics_AutoKeyGeneration" project<br>
+    </h3>
+    <br>
+    <div style="margin-left: 40px;"> 1. Perform automatic key generation
+      on ModelMap object<br>
+      <br>
+    </div>
+    <div style="margin-left: 40px;"><img alt=""
+        src="index_files/boot-32.png" width="465" height="435"><br>
+      <br>
+      <img alt="" src="index_files/boot-33.png" width="465" height="453"><br>
+      <br>
+      2. Perform automatic key generation on ModelAndView object<br>
+      <br>
+      <img alt="" src="index_files/boot-34.png" width="465" height="534"><br>
+      <br>
+      <img alt="" src="index_files/boot-35.png" width="465" height="453"><br>
+      <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a
+href="#Exercise_4">return
+        to top of exercise</a>, <a
+href="#Tutorial_Exercises">return
+        to top</a><br>
+      <br>
+    </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="4.2"></a>(4.2)
+Study
+
+
+
+
+
+
+
+
+
+
+
+
+
+      the project</h3>
+    <br>
+    <div style="margin-left: 40px;">1. MyController.java<br>
+      <br>
+      <table width="100%" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td valign="top">package com.jpassion.mvc.controllers;<br>
+              <br>
+              ...<br>
+              <br>
+              @Controller<br>
+              @RequestMapping("/helloworld")<br>
+              public class MyController {<br>
+              <br>
+              &nbsp;<b>&nbsp;&nbsp; // Automatic key generation for
+                ModelMap attribute</b><br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value =
+              "/automaticKeyGeneration_ModelMap", method =
+              RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; public String handleRequest1(ModelMap
+              modelMap) {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+                style="font-weight: bold;">// Note that catItems is List
+                of Item type</span><br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span
+                style="font-weight: bold;">List&lt;<span style="color:
+                  rgb(255, 0, 0);">Item</span>&gt; cartItems = new
+                ArrayList&lt;<span style="color: rgb(255, 0, 0);">Item</span>&gt;();</span><br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; cartItems.add(new
+              Item("Apple", 10.0));<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; cartItems.add(new
+              Item("Orange", 20.0));<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; User user = new
+              User("Sang Shin");<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<b>&nbsp; // This is the
+                same as modelMap.addAttribute("itemList", cartItems);</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // "itemList"
+                is automatically generated as a key</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                modelMap.addAttribute(cartItems);</b><b><br>
+              </b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // This is
+                the same as modelMap.addAttribute("user", user);</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // "user" is
+                automatically generated as a key</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                modelMap.addAttribute(user);</b><br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+              "shoppingCart";<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp;<b> // Automatic key generation for
+                ModelAndView attribute</b><br>
+              &nbsp;&nbsp;&nbsp; @RequestMapping(value =
+              "/automaticKeyGeneration_ModelAndView", method =
+              RequestMethod.GET)<br>
+              &nbsp;&nbsp;&nbsp; // Return type is ModelAndView<br>
+              &nbsp;&nbsp;&nbsp; // ModelAndView object is created
+              inside the handler method<br>
+              &nbsp;&nbsp;&nbsp; public ModelAndView handleRequest2() {<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span
+                style="font-weight: bold;">// Note that catItems is List
+                of Item type</span><br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span
+                style="font-weight: bold;">List&lt;Item&gt; cartItems =
+                new ArrayList&lt;Item&gt;();</span><br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; cartItems.add(new
+              Item("Apple", 10.0));<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; cartItems.add(new
+              Item("Orange", 20.0));<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>User user = new
+                User("Sang Shin");</b><b><br>
+              </b><br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // shoppingCart2 is
+              logical view name<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ModelAndView mav =
+              new ModelAndView("shoppingCart2");<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<b>&nbsp; // This is the
+                same as mav.addObject("itemList", cartItems);</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // itemList
+                is automatically generated as a key</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                mav.addObject(cartItems);</b><b><br>
+              </b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // This is
+                the same as mav.addObject("user", user);</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // user is
+                automatically generated as a key</b><b><br>
+              </b><b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                mav.addObject(user);</b><br>
+              <br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return mav;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      2. Item.java<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">package
+              com.jpassion.mvc.domain;<br>
+              <br>
+              public class Item {<br>
+              &nbsp;&nbsp;&nbsp; private String itemName;<br>
+              &nbsp;&nbsp;&nbsp; private double price;<br>
+              &nbsp;&nbsp;&nbsp; public Item(String itemName, double
+              price) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; super();<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.itemName =
+              itemName;<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.price = price;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; public String getItemName() {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return itemName;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; public void setItemName(String name) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.itemName =
+              name;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; public double getPrice() {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return price;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              &nbsp;&nbsp;&nbsp; public void setPrice(double price) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.price = price;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      3. User.java<br>
+      <br>
+      <table style="width: 100%; text-align: left;" border="1"
+        cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">package
+              com.jpassion.mvc.domain;<br>
+              <br>
+              public class User {<br>
+              &nbsp;&nbsp;&nbsp; private String name;<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; public User(String name) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; super();<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.name = name;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; public String getName() {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return name;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; public void setName(String name) {<br>
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.name = name;<br>
+              &nbsp;&nbsp;&nbsp; }<br>
+              <br>
+              }<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="#Exercise_4">return to top of exercise</a>, <a
+href="#Tutorial_Exercises">return
+        to top</a> </div>
+    <br>
+    <h3 style="margin-left: 40px;" class="tutorial"><a name="4.3"></a>(4.3)
+
+      For your own exercise<br>
+    </h3>
+    <br>
+    <div style="margin-left: 40px;">1. Create another domain class,
+      Student.java, which has the following two fields<br>
+      <ul>
+        <li>String studentName</li>
+        <li>double grade;</li>
+      </ul>
+      2. Create a few instances of Student objects and add it to the
+      ModelMap using automatic key generation<br>
+      3. Access the student objects from the JSP page.<br>
+      <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a
+href="#Exercise_4">return
+        to top of exercise</a>, <a
+href="#Tutorial_Exercises">return
+        to top</a><br>
+      <br>
+    </div>
+    <br>
+    <a href="index.html#Tutorial_Exercises"></a>
+    <h2><a name="Homework_Exercise"></a><a name="Homework"></a>Homework
+      Exercise<br>
+    </h2>
+    <br>
+    <div style="margin-left: 40px;">1. The homework is to create a new
+      interceptor as following<br>
+      <ul>
+        <li>Display the contents of the Accept request header in the
+          request to the console</li>
+        <li>Display the contents of Content-Type response header to the
+          console<br>
+        </li>
+      </ul>
+      2<span style="color: rgb(0, 0, 0);">. Send the following files to</span><span
+        style="color: rgb(0, 0, 0);"> <a
+          href="mailto:spring-homeworks@jpassion.com">spring-homeworks@jpassion.com</a>
+        with </span><span style="font-weight: bold; color: rgb(0, 0,
+        0);">Subject </span><span style="color: rgb(0, 0, 0);">as </span><span
+        style="font-weight: bold; color: rgb(0, 0, 0);">spring4_mvc_controllers_part2.</span><br
+        style="color: rgb(0, 0, 0);">
+      <span style="font-weight: bold; color: rgb(0, 0, 0);"></span></div>
+    <ul style="color: rgb(0, 0, 0); margin-left: 40px;">
+      <li>Zip file of the project<br>
+      </li>
+      <li>Captured output screen&nbsp;<span style="font-weight: bold;">
+        </span>- name it as<span style="font-weight: bold;"></span> <span
+          style="font-weight: bold;">spring4_mvc_controllers_part2</span><span
+          style="font-weight: bold;">.&lt;whatever graphics format&gt;</span>
+        <ul>
+        </ul>
+        <ul>
+        </ul>
+      </li>
+    </ul>
+    <div style="margin-left: 40px;"> &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="#Tutorial_Exercises">return to top</a></div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="indent"><br>
+      <br>
+      <br>
+    </div>
+    <br>
+    <p> </p>
+    <!-- ======================================================================================== -->
+  </body>
+</html>
